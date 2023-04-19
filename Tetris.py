@@ -1,5 +1,7 @@
 import pygame
 import random
+import Database as db
+import UserInterface as ui
 
 pygame.font.init()
 
@@ -285,7 +287,7 @@ class Tetris:
 
 
     def main(self,window):
-        #sql function high_score = get_user_high_score()
+        high_score = db.getUserHighScore(ui.g_username)
         global grid
 
         locked_positions = {}
@@ -360,7 +362,7 @@ class Tetris:
                 change_piece = False
                 score += self.clear_rows(grid, locked_positions)
 
-            self.draw_window(window, grid, score, high_score=0)
+            self.draw_window(window, grid, score, high_score)
             self.draw_next_shape(next_piece, window)
             pygame.display.update()
 
@@ -369,7 +371,8 @@ class Tetris:
                 pygame.display.update()
                 pygame.time.delay(3000)
                 run = False
-                # sql function update_score(int(score))
+                if score > high_score:
+                    db.setUserHighScore(ui.g_username,int(score))
 
 
 

@@ -16,6 +16,8 @@ class UserInterface:
         print("username entered :", username.get())
         print("password entered :", password.get())
         loginFlag = db.searchDB(username.get(),password.get())
+        global g_username 
+        g_username = username.get()
         if loginFlag:
             self.window.destroy()
             game = Tetris()
