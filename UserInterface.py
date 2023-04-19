@@ -30,13 +30,17 @@ class UserInterface:
         newNickname = nickname.get()
         newPassword = password.get()
         newConfirmPassword = confirmPassword.get()
-        signInFlag = db.addUser(newUsername,newNickname,newPassword)
-        if signInFlag:
+        global g_username
+        g_username = newUsername
+
+        if newPassword.lower() != newConfirmPassword.lower():
+            messagebox.showerror("Error", "Invalid User Name And Password")
+        else:
+            signInFlag = db.addUser(newUsername,newNickname,newPassword)
             self.window.destroy()
             game = Tetris()
             game.main_menu()
-        else:
-            messagebox.showerror("Error", "User not Added")
+            
 
     def LoginPage(self):
         #username label and text entry box
